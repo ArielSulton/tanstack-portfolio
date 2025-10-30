@@ -1,0 +1,60 @@
+import type { Certification } from "../types";
+
+export const certifications: Certification[] = [
+	{
+		id: "cert-1",
+		name: "Google for Education: Gemini Certified Educator",
+		issuer: "Google for Education",
+		date: "2025",
+		credentialUrl: "https://www.credential.net/google",
+		imageUrl: "/images/certifications/gemini-educator.png",
+	},
+	{
+		id: "cert-2",
+		name: "Google for Education: Gemini Certified University Student",
+		issuer: "Google for Education",
+		date: "2025",
+		credentialUrl: "https://www.credential.net/google",
+		imageUrl: "/images/certifications/gemini-student.png",
+	},
+	{
+		id: "cert-3",
+		name: "Belajar Fundamental Deep Learning",
+		issuer: "Dicoding",
+		date: "2025",
+		credentialUrl: "https://www.dicoding.com/certificates",
+		imageUrl: "/images/certifications/dicoding-deep-learning.png",
+	},
+	{
+		id: "cert-4",
+		name: "Belajar Machine Learning untuk Pemula",
+		issuer: "Dicoding",
+		date: "2025",
+		credentialUrl: "https://www.dicoding.com/certificates",
+		imageUrl: "/images/certifications/dicoding-ml-beginner.png",
+	},
+	{
+		id: "cert-5",
+		name: "Belajar Pengembangan Web Intermediate",
+		issuer: "Dicoding",
+		date: "2025",
+		credentialUrl: "https://www.dicoding.com/certificates",
+		imageUrl: "/images/certifications/dicoding-web-intermediate.png",
+	},
+	{
+		id: "cert-6",
+		name: "Belajar Dasar Cloud dan Gen AI di AWS",
+		issuer: "Dicoding",
+		date: "2025",
+		credentialUrl: "https://www.dicoding.com/certificates",
+		imageUrl: "/images/certifications/dicoding-aws-cloud.png",
+	},
+	{
+		id: "cert-7",
+		name: "Belajar Fundamental Front-End Web Development",
+		issuer: "Dicoding",
+		date: "2025",
+		credentialUrl: "https://www.dicoding.com/certificates",
+		imageUrl: "/images/certifications/dicoding-frontend.png",
+	},
+];

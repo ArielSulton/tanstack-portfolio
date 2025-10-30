@@ -1,0 +1,9 @@
+export { achievements } from "./achievements";
+export { certifications } from "./certifications";
+export { education } from "./education";
+export { experience } from "./experience";
+export { organizations } from "./organizations";
+export { profile } from "./profile";
+export { projects } from "./projects";
+export { skills } from "./skills";
+export { socialLinks } from "./social-links";

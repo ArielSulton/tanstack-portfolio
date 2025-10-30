@@ -1,0 +1,121 @@
+import type { Experience } from "../types";
+
+export const experiences: Experience[] = [
+	{
+		id: "exp-1",
+		company: "Google Indonesia",
+		role: "Google Student Ambassador",
+		location: "Indonesia",
+		startDate: "September 2025",
+		endDate: undefined,
+		current: true,
+		description:
+			"Google Student Ambassador working to improve AI literacy among university students and promote Google's AI technologies.",
+		achievements: [
+			"Created 10 educational content pieces to improve AI literacy among university students",
+			"Delivered hands-on sessions on Gemini AI and its five key features",
+			"Produced content and supported the Google Student Ambassador Inauguration Event",
+		],
+		technologies: ["Gemini AI", "AI Education", "Content Creation"],
+		logo: "/images/experience/google.jpg",
+	},
+	{
+		id: "exp-2",
+		company: "Politeknik Elektronika Negeri Surabaya",
+		role: "Environmental AI Researcher",
+		location: "Surabaya, Indonesia",
+		startDate: "August 2025",
+		endDate: undefined,
+		current: true,
+		description:
+			"Conducting research on AI applications for environmental monitoring, specifically mangrove health assessment using multispectral imagery and water quality data.",
+		achievements: [
+			"Conduct monthly collection of water-quality measurements and multispectral drone imagery",
+			"Research and build an AI pipeline for mangrove health assessment from the collected data",
+			"Apply computer vision, time-series forecasting, and LLM-based summarization (RAG)",
+		],
+		technologies: [
+			"Computer Vision",
+			"Time-Series Forecasting",
+			"LLM",
+			"RAG",
+			"Drone Imagery",
+			"Environmental Data",
+		],
+		logo: "/images/experience/Logo_PENS.png",
+	},
+	{
+		id: "exp-3",
+		company: "Asah led by Dicoding",
+		role: "Machine Learning Cohort",
+		location: "Indonesia",
+		startDate: "January 2025",
+		endDate: undefined,
+		current: true,
+		description:
+			"Independent study program focused on machine learning and deep learning with comprehensive soft skills development.",
+		achievements: [
+			"Completed independent study modules focused on machine learning and deep learning",
+			"Strengthened soft skills via sessions on Personal Productivity, Growth Mindset, Flexing Under Pressure, Communication and Networking, Business Presentation, and Personal Branding",
+			"Implemented a product recommendation system using popularity-based and collaborative filtering approaches",
+		],
+		technologies: [
+			"Machine Learning",
+			"Deep Learning",
+			"Recommendation Systems",
+			"Collaborative Filtering",
+		],
+		logo: "/images/experience/asah.png",
+	},
+	{
+		id: "exp-4",
+		company: "EEPIS Data Enthusiast (EDUST)",
+		role: "Mentor and Social Media Specialist",
+		location: "Surabaya, Indonesia",
+		startDate: "January 2025",
+		endDate: undefined,
+		current: true,
+		description:
+			"Community leadership role focused on expanding data science community engagement and mentoring students.",
+		achievements: [
+			"Expanded community event reach and participation by 20% year-over-year",
+			"Mentored the data science division for competitions held by the community",
+			"Recorded and edited weekly community meeting videos",
+		],
+		technologies: [
+			"Data Science",
+			"Mentoring",
+			"Community Management",
+			"Video Editing",
+		],
+		logo: "/images/experience/edust.png",
+	},
+	{
+		id: "exp-5",
+		company: "Penship EEPIS Roboboat Team",
+		role: "Head of Programming Division and Autonomous Systems Engineer",
+		location: "Surabaya, Indonesia",
+		startDate: "January 2024",
+		endDate: undefined,
+		current: true,
+		description:
+			"Leading software development for autonomous boat navigation systems with advanced sensor fusion and computer vision.",
+		achievements: [
+			"Led the team's software roadmap, code-style standardization, and technical documentation",
+			"Built a ROS2 stack for autonomous boat navigation with two control-method approaches",
+			"Implemented obstacle avoidance via sensor fusion across camera (computer vision), GPS, and LiDAR",
+			"Developed YOLOv11-based object detection and optimized inference & data pipelines",
+			"Evaluated model performance and mitigated false positives (color similarity, thresholding, augmentation)",
+		],
+		technologies: [
+			"ROS2",
+			"Computer Vision",
+			"YOLOv11",
+			"LiDAR",
+			"GPS",
+			"Sensor Fusion",
+			"Autonomous Navigation",
+		],
+		logo: "/images/experience/penship.png",
+	},
+];
