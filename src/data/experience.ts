@@ -17,7 +17,7 @@ export const experiences: Experience[] = [
 			"Produced content and supported the Google Student Ambassador Inauguration Event",
 		],
 		technologies: ["Gemini AI", "AI Education", "Content Creation"],
-		logo: "/images/experience/google.jpg",
+		logo: "/images/experience/avif/google.avif",
 	},
 	{
 		id: "exp-2",
@@ -42,7 +42,7 @@ export const experiences: Experience[] = [
 			"Drone Imagery",
 			"Environmental Data",
 		],
-		logo: "/images/experience/Logo_PENS.png",
+		logo: "/images/experience/avif/Logo_PENS.avif",
 	},
 	{
 		id: "exp-3",
@@ -65,7 +65,7 @@ export const experiences: Experience[] = [
 			"Recommendation Systems",
 			"Collaborative Filtering",
 		],
-		logo: "/images/experience/asah.png",
+		logo: "/images/experience/avif/asah.avif",
 	},
 	{
 		id: "exp-4",
@@ -88,7 +88,7 @@ export const experiences: Experience[] = [
 			"Community Management",
 			"Video Editing",
 		],
-		logo: "/images/experience/edust.png",
+		logo: "/images/experience/avif/edust.avif",
 	},
 	{
 		id: "exp-5",
@@ -116,6 +116,6 @@ export const experiences: Experience[] = [
 			"Sensor Fusion",
 			"Autonomous Navigation",
 		],
-		logo: "/images/experience/penship.png",
+		logo: "/images/experience/avif/penship.avif",
 	},
 ];

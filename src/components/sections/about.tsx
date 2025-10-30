@@ -59,7 +59,7 @@ export function About() {
 							<div className="flex items-center gap-4">
 								<div className="w-16 h-16 rounded-full bg-white overflow-hidden shadow-lg border-2 border-border shrink-0">
 									<img
-										src="/images/experience/Logo_PENS.png"
+										src="/images/experience/avif/Logo_PENS.avif"
 										alt="Politeknik Elektronika Negeri Surabaya"
 										loading="lazy"
 										decoding="async"

@@ -18,40 +18,115 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-	head: () => ({
-		meta: [
-			{
-				charSet: "utf-8",
-			},
-			{
-				name: "viewport",
-				content: "width=device-width, initial-scale=1",
-			},
-			{
-				title: "Ariel Sulton | Portfolio",
-			},
-			{
-				name: "description",
-				content:
-					"Personal portfolio of Mochammad Ariel Sulton - AI Engineer, Data Scientist, and Full-Stack Developer",
-			},
-			{
-				name: "theme-color",
-				content: "#3B82F6",
-			},
-		],
-		links: [
-			{
-				rel: "stylesheet",
-				href: appCss,
-			},
-			{
-				rel: "icon",
-				type: "image/svg+xml",
-				href: "/favicon.svg",
-			},
-		],
-	}),
+	head: () => {
+		const siteTitle = "Mochammad Ariel Sulton";
+		const siteDescription =
+			"Personal portfolio of Mochammad Ariel Sulton - AI Engineer, Data Scientist, and Full-Stack Developer";
+		const siteUrl = "https://arielsulton.netlify.app"; // Update with your actual domain
+		const ogImage = "/images/avatar/avif/s-logos.avif";
+
+		return {
+			meta: [
+				{
+					charSet: "utf-8",
+				},
+				{
+					name: "viewport",
+					content: "width=device-width, initial-scale=1",
+				},
+				{
+					title: siteTitle,
+				},
+				{
+					name: "description",
+					content: siteDescription,
+				},
+				{
+					name: "theme-color",
+					content: "#3B82F6",
+				},
+				// Open Graph / Facebook
+				{
+					property: "og:type",
+					content: "website",
+				},
+				{
+					property: "og:url",
+					content: siteUrl,
+				},
+				{
+					property: "og:title",
+					content: siteTitle,
+				},
+				{
+					property: "og:description",
+					content: siteDescription,
+				},
+				{
+					property: "og:image",
+					content: `${siteUrl}${ogImage}`,
+				},
+				{
+					property: "og:image:alt",
+					content: "Ariel Sulton Portfolio Logo",
+				},
+				{
+					property: "og:locale",
+					content: "en_US",
+				},
+				// Twitter Card
+				{
+					name: "twitter:card",
+					content: "summary_large_image",
+				},
+				{
+					name: "twitter:url",
+					content: siteUrl,
+				},
+				{
+					name: "twitter:title",
+					content: siteTitle,
+				},
+				{
+					name: "twitter:description",
+					content: siteDescription,
+				},
+				{
+					name: "twitter:image",
+					content: `${siteUrl}${ogImage}`,
+				},
+				{
+					name: "twitter:image:alt",
+					content: "Ariel Sulton Portfolio Logo",
+				},
+				// Additional SEO
+				{
+					name: "author",
+					content: "Mochammad Ariel Sulton",
+				},
+				{
+					name: "keywords",
+					content:
+						"Ariel Sulton, AI Engineer, Data Scientist, Full-Stack Developer, Machine Learning, Web Development, Portfolio",
+				},
+			],
+			links: [
+				{
+					rel: "stylesheet",
+					href: appCss,
+				},
+				{
+					rel: "icon",
+					type: "image/x-icon",
+					href: "/favicon.ico",
+				},
+				{
+					rel: "canonical",
+					href: siteUrl,
+				},
+			],
+		};
+	},
 
 	shellComponent: RootDocument,
 	notFoundComponent: NotFound,

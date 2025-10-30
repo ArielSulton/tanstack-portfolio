@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { experiences } from "../../data/experience";
 import { formatDateRange } from "../../lib/utils";
-import { BackgroundBeams } from "../ui/background-beams";
 import { Badge } from "../ui/badge";
 import { Card } from "../ui/card";
 import { TracingBeam } from "../ui/tracing-beam";
@@ -11,7 +10,6 @@ export function Experience() {
 	return (
 		// biome-ignore lint/correctness/useUniqueElementIds: Static ID needed for navigation anchor
 		<section id="experience" className="py-20 relative">
-			<BackgroundBeams />
 			<div className="container mx-auto px-4 relative z-10">
 				{/* Section Header */}
 				<motion.div

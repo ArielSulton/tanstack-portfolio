@@ -10,7 +10,7 @@ export const achievements: Achievement[] = [
 		rank: "1st Place",
 		description:
 			"Won first place in the AI Innovation Challenge at COMPFEST 17 with Tunarasa, an inclusive communication platform for public-service accessibility.",
-		imageUrl: "/images/achievements/compfest17_champion.jpg",
+		imageUrl: "/images/achievements/avif/compfest17_champion.avif",
 	},
 	{
 		id: "ach-2",
@@ -19,7 +19,7 @@ export const achievements: Achievement[] = [
 		date: "September 2025",
 		description:
 			"Received the Student Award at COMPFEST 17 AI Innovation Challenge for outstanding student achievement.",
-		imageUrl: "/images/achievements/compfest17_studentaward.jpg",
+		imageUrl: "/images/achievements/avif/compfest17_studentaward.avif",
 	},
 	{
 		id: "ach-3",
@@ -29,7 +29,7 @@ export const achievements: Achievement[] = [
 		date: "September 2025",
 		description:
 			"Participated in the Google Student Ambassador Inauguration Event to promote AI literacy among university students.",
-		imageUrl: "/images/achievements/google_inauguration_2025.jpg",
+		imageUrl: "/images/achievements/avif/google_inauguration_2025.avif",
 	},
 	{
 		id: "ach-4",
@@ -39,7 +39,7 @@ export const achievements: Achievement[] = [
 		rank: "Semifinalist",
 		description:
 			"Advanced to the semifinals of the IoT Development Competition at Technocorner UGM 2025.",
-		imageUrl: "/images/achievements/technocorner_2025.jpg",
+		imageUrl: "/images/achievements/avif/technocorner_2025.avif",
 	},
 	{
 		id: "ach-5",
@@ -50,7 +50,7 @@ export const achievements: Achievement[] = [
 		rank: "Finalist",
 		description:
 			"Finalist in the Autonomous Surface Vessel Prototype Contest at Kontes Kapal Indonesia 2024 with the Lawana ASV project.",
-		imageUrl: "/images/achievements/kki_2024.jpg",
+		imageUrl: "/images/achievements/avif/kki_2024.avif",
 	},
 	{
 		id: "ach-6",
@@ -60,6 +60,6 @@ export const achievements: Achievement[] = [
 		date: "April 2024",
 		description:
 			"Received PKM-KC (Program Kreativitas Mahasiswa - Karsa Cipta) funding from the Indonesian Ministry of Education for the Jalavahana UASV project.",
-		imageUrl: "/images/achievements/pkmkc_2024.jpg",
+		imageUrl: "/images/achievements/avif/pkmkc_2024.avif",
 	},
 ];
