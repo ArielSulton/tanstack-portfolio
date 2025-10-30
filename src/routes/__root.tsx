@@ -22,7 +22,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		const siteTitle = "Mochammad Ariel Sulton";
 		const siteDescription =
 			"Personal portfolio of Mochammad Ariel Sulton - AI Engineer, Data Scientist, and Full-Stack Developer";
-		const siteUrl = "https://arielsulton.my.id"; // Update with your actual domain
+		const siteUrl = "https://arielsulton.netlify.app"; // Update with your actual domain
 		const ogImage = "/images/avatar/avif/s-logos.avif";
 
 		return {
