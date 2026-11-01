@@ -134,6 +134,7 @@ export const projects: Project[] = [
 			"Sensor Fusion",
 		],
 		achievements: ["1st Place - ASV, Kontes Kapal Indonesia 2025"],
+		sourceNote: "Source code is not public",
 		imageUrl: "/images/projects/rakshavara-asv.webp",
 		imageAlt: "RAKSHAVARA ASV on the water",
 		imageFit: "cover",
