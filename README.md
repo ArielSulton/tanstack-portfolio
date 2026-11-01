@@ -9,7 +9,7 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-Use Node.js 22.12 or newer and Bun. The development server uses port 3000. Portfolio content lives in `src/data`, sections in `src/components/sections`, and media in `public/images`. The only public page is `/`; unknown paths use the custom not-found screen. Starter demo routes and APIs have been removed.
+Use Node.js 22.12 or newer and Bun 1.4.4 or newer. Netlify pins the tested Node.js 22.23.4 and Bun 1.4.4 versions. The development server uses port 3000. Portfolio content lives in `src/data`, sections in `src/components/sections`, and media in `public/images`. The only public page is `/`; unknown paths use the custom not-found screen. Starter demo routes and APIs have been removed.
 
 ## Validation and build
 
@@ -39,3 +39,6 @@ bun run test
 ```
 
 Security updates use the committed Bun lockfile. `glob` and `minimatch` have explicit safe-version overrides pending updates to Netlify's transitive ranges. `deepmerge` resolves to the MIT-licensed local security fork in `vendor/deepmerge`; keep that directory with the manifest and lockfile. See its README for the patch, upstream advisory, and removal conditions. The regression suite also checks Netlify configuration merging and function packaging. No advisory is ignored.
+
+
+Netlify uses the Bun and Node versions pinned in `netlify.toml`. Its build command first runs `bun install --frozen-lockfile` to reconcile restored dependency caches before loading Vite. Bun 1.2.18 can report a successful install while leaving the local transitive `deepmerge` override unresolved; Bun 1.4.4 correctly installs it, including over an existing older cache. Keep the Netlify Bun pin and `packageManager` declaration aligned when upgrading the installer.

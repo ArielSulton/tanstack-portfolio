@@ -1,3 +1,8 @@
 [build]
-  command = "vite build"
+  command = "bun install --frozen-lockfile && bun run build"
   publish = "dist/client"
+
+[build.environment]
+  BUN_VERSION = "1.4.4"
+  BUN_FLAGS = "--frozen-lockfile"
+  NODE_VERSION = "22.23.4"
