@@ -7,6 +7,7 @@ count.txt
 .env
 .nitro
 .tanstack
+.impeccable
 .wrangler
 .output
 .vinxi

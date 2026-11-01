@@ -1,7 +1,6 @@
-import { Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
+import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 import { profile } from "../../data/profile";
-import { Button } from "../ui/button";
 
 const navigation = [
 	{ name: "About", href: "#about" },
@@ -12,97 +11,241 @@ const navigation = [
 ];
 
 export function Header() {
-	const [isScrolled, setIsScrolled] = useState(false);
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const menuId = useId();
+	const [open, setOpen] = useState(false);
+	const [dark, setDark] = useState(false);
+	const [desktop, setDesktop] = useState(false);
+	const [folded, setFolded] = useState(false);
+	const [hovered, setHovered] = useState(false);
+	const [focused, setFocused] = useState(false);
+	const [heroAction, setHeroAction] = useState(true);
+	const [active, setActive] = useState("");
+	const [panelWidth, setPanelWidth] = useState(600);
+	const menuButton = useRef<HTMLButtonElement>(null);
+	const header = useRef<HTMLElement>(null);
+	const panel = useRef<HTMLDivElement>(null);
+	const compact = desktop && folded && !hovered && !focused;
 
 	useEffect(() => {
-		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 50);
+		const media = window.matchMedia("(prefers-color-scheme: dark)");
+		const apply = () => {
+			let saved: string | null = null;
+			try {
+				saved = localStorage.getItem("portfolio-theme");
+			} catch {
+				/* Storage is optional. */
+			}
+			const next = saved ? saved === "dark" : media.matches;
+			setDark(next);
+			document.documentElement.classList.toggle("dark", next);
 		};
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
+		apply();
+		media.addEventListener("change", apply);
+		return () => media.removeEventListener("change", apply);
 	}, []);
 
-	const scrollToSection = (href: string) => {
-		const element = document.querySelector(href);
-		if (element) {
-			element.scrollIntoView({ behavior: "smooth" });
-			setIsMobileMenuOpen(false);
+	useEffect(() => {
+		const media = matchMedia("(min-width: 1000px)");
+		const sync = () => {
+			const activeElement = document.activeElement;
+			if (media.matches && activeElement === menuButton.current)
+				header.current
+					?.querySelector<HTMLAnchorElement>(".island-brand")
+					?.focus();
+			if (!media.matches && panel.current?.contains(activeElement))
+				menuButton.current?.focus();
+			setDesktop(media.matches);
+			setOpen(false);
+		};
+		sync();
+		media.addEventListener("change", sync);
+		return () => media.removeEventListener("change", sync);
+	}, []);
+
+	useEffect(() => {
+		if (!desktop) return;
+		let previous = window.scrollY;
+		let frame = 0;
+		const scroll = () => {
+			if (frame) return;
+			frame = requestAnimationFrame(() => {
+				frame = 0;
+				const y = window.scrollY;
+				if (y < 100) setFolded(false);
+				else if (Math.abs(y - previous) >= 6) setFolded(y > previous);
+				if (Math.abs(y - previous) >= 6 || y < 100) previous = y;
+			});
+		};
+		window.addEventListener("scroll", scroll, { passive: true });
+		return () => {
+			window.removeEventListener("scroll", scroll);
+			cancelAnimationFrame(frame);
+		};
+	}, [desktop]);
+
+	useEffect(() => {
+		const inner = panel.current;
+		if (!inner) return;
+		const resize = new ResizeObserver(() =>
+			setPanelWidth(Math.ceil(inner.getBoundingClientRect().width)),
+		);
+		resize.observe(inner);
+		return () => resize.disconnect();
+	}, []);
+
+	useEffect(() => {
+		const target = document.querySelector(".hero-buttons");
+		if (!target) {
+			setHeroAction(false);
+			return;
 		}
+		const observer = new IntersectionObserver((entries) =>
+			setHeroAction(entries[0]?.isIntersecting ?? false),
+		);
+		observer.observe(target);
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries)
+					if (entry.isIntersecting)
+						setActive(entry.target.id === "home" ? "" : `#${entry.target.id}`);
+			},
+			{ rootMargin: "-12% 0px -65% 0px" },
+		);
+		const home = document.querySelector("#home");
+		if (home) observer.observe(home);
+		for (const item of navigation) {
+			const target = document.querySelector(item.href);
+			if (target) observer.observe(target);
+		}
+		return () => observer.disconnect();
+	}, []);
+
+	useEffect(() => {
+		if (!open) return;
+		const close = (event: KeyboardEvent) => {
+			if (event.key === "Escape") {
+				setOpen(false);
+				menuButton.current?.focus({ preventScroll: true });
+			}
+		};
+		const outside = (event: Event) => {
+			if (!header.current?.contains(event.target as Node)) setOpen(false);
+		};
+		document.addEventListener("keydown", close);
+		document.addEventListener("pointerdown", outside);
+		document.addEventListener("focusin", outside);
+		return () => {
+			document.removeEventListener("keydown", close);
+			document.removeEventListener("pointerdown", outside);
+			document.removeEventListener("focusin", outside);
+		};
+	}, [open]);
+
+	const toggleTheme = () => {
+		const next = !dark;
+		setDark(next);
+		document.documentElement.classList.toggle("dark", next);
+		try {
+			localStorage.setItem("portfolio-theme", next ? "dark" : "light");
+		} catch {
+			/* Theme still works without storage. */
+		}
+	};
+	const closeMenu = () => {
+		setOpen(false);
+		menuButton.current?.focus({ preventScroll: true });
 	};
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: Passive hover/focus observers reveal native navigation controls.
 		<header
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-				isScrolled
-					? "bg-background/95 backdrop-blur-md shadow-md border-b border-border"
-					: "bg-transparent"
-			}`}
+			ref={header}
+			className={`island-header ${open ? "is-open" : ""}`}
+			data-island={compact ? "compact" : "expanded"}
+			data-cta={heroAction ? "later" : "visible"}
+			style={{ "--panel-width": `${panelWidth}px` } as CSSProperties}
+			onMouseEnter={() => setHovered(true)}
+			onMouseLeave={() => setHovered(false)}
+			onFocus={() => setFocused(true)}
+			onBlur={(event) => {
+				if (!event.currentTarget.contains(event.relatedTarget))
+					setFocused(false);
+			}}
 		>
-			<div className="container mx-auto px-4">
-				<div className="flex items-center justify-between h-16">
-					{/* Logo */}
+			<div className="island-bar">
+				{/* biome-ignore lint/a11y/useValidAnchor: Native fragment navigation to the hero. */}
+				<a className="island-brand" href="#home" onClick={() => setOpen(false)}>
+					<span className="brand-dot" aria-hidden="true" />
+					Ariel Sulton
+				</a>
+				<div className="island-navigation" inert={compact}>
+					<div ref={panel} className="island-navigation-inner">
+						<nav className="desktop-nav" aria-label="Main navigation">
+							{navigation.map((item) => (
+								<a
+									key={item.name}
+									href={item.href}
+									aria-current={active === item.href ? "location" : undefined}
+								>
+									{item.name}
+								</a>
+							))}
+						</nav>
+					</div>
+				</div>
+				<div className="island-actions">
 					<button
 						type="button"
-						onClick={() => {
-							window.scrollTo({ top: 0, behavior: "smooth" });
-						}}
-						className="font-mono font-bold text-xl hover:opacity-80 transition-opacity"
+						className="icon-control"
+						onClick={toggleTheme}
+						aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
 					>
-						<span className="text-muted-foreground">&lt;</span>
-						Ariel Sulton
-						<span className="text-muted-foreground"> /&gt;</span>
+						{dark ? <Sun size={18} /> : <Moon size={18} />}
 					</button>
-
-					{/* Desktop Navigation */}
-					<nav className="hidden md:flex items-center gap-6">
-						{navigation.map((item) => (
-							<button
-								key={item.name}
-								type="button"
-								onClick={() => scrollToSection(item.href)}
-								className="text-muted-foreground hover:text-foreground transition-colors font-medium"
-							>
-								{item.name}
-							</button>
-						))}
-						<Button asChild size="sm">
-							<a href={`mailto:${profile.email}`}>Contact</a>
-						</Button>
-					</nav>
-
-					{/* Mobile Menu Button */}
+					<div className="island-contact-wrap" inert={desktop && heroAction}>
+						<a className="island-contact" href={`mailto:${profile.email}`}>
+							Contact
+							<ArrowUpRight size={15} />
+						</a>
+					</div>
 					<button
+						ref={menuButton}
 						type="button"
-						className="md:hidden p-2 hover:bg-accent rounded-lg transition-colors"
-						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-						aria-label="Toggle menu"
+						className="icon-control menu-toggle"
+						aria-label={open ? "Close menu" : "Open menu"}
+						aria-expanded={open}
+						aria-controls={menuId}
+						onClick={() => setOpen(!open)}
 					>
-						{isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+						{open ? <X size={21} /> : <Menu size={21} />}
 					</button>
 				</div>
 			</div>
-
-			{/* Mobile Navigation */}
-			{isMobileMenuOpen && (
-				<div className="md:hidden bg-background/95 backdrop-blur-md border-t border-border">
-					<nav className="container mx-auto px-4 py-4 flex flex-col gap-2">
+			<div className="mobile-nav-shell" inert={!open} aria-hidden={!open}>
+				<nav id={menuId} className="mobile-nav" aria-label="Mobile navigation">
+					<div className="mobile-nav-content">
 						{navigation.map((item) => (
-							<button
+							<a
 								key={item.name}
-								type="button"
-								onClick={() => scrollToSection(item.href)}
-								className="text-left px-4 py-2 rounded-lg hover:bg-accent transition-colors font-medium"
+								href={item.href}
+								aria-current={active === item.href ? "location" : undefined}
+								onClick={closeMenu}
 							>
 								{item.name}
-							</button>
+								<ArrowUpRight size={20} />
+							</a>
 						))}
-						<Button asChild className="mt-2">
-							<a href={`mailto:${profile.email}`}>Contact</a>
-						</Button>
-					</nav>
-				</div>
-			)}
+						<a href={`mailto:${profile.email}`} onClick={closeMenu}>
+							Contact
+							<ArrowUpRight size={20} />
+						</a>
+					</div>
+				</nav>
+			</div>
 		</header>
 	);
 }

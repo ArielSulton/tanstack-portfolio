@@ -18,9 +18,9 @@ export function formatDateRange(
 	current = false,
 ): string {
 	const start = formatDate(startDate);
+	if (endDate) return `${start} - ${formatDate(endDate)}`;
 	if (current) return `${start} - Present`;
-	if (!endDate) return start;
-	return `${start} - ${formatDate(endDate)}`;
+	return start;
 }
 
 export function slugify(text: string): string {

@@ -3,8 +3,8 @@ import { profile } from "../../data/profile";
 
 export function Footer() {
 	return (
-		<footer className="py-8 mt-20">
-			<div className="container mx-auto px-4">
+		<footer className="portfolio-footer">
+			<div className="section-container footer-sheet">
 				<div className="text-center">
 					<div className="flex justify-center space-x-4 items-center mb-6">
 						<a
@@ -12,7 +12,7 @@ export function Footer() {
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label="LinkedIn"
-							className="text-gray-400 hover:text-white transition-colors duration-300"
+							className="footer-social"
 						>
 							<Linkedin size={20} />
 						</a>
@@ -22,7 +22,7 @@ export function Footer() {
 								target="_blank"
 								rel="noopener noreferrer"
 								aria-label="GitHub"
-								className="text-gray-400 hover:text-white transition-colors duration-300"
+								className="footer-social"
 							>
 								<Github size={20} />
 							</a>
@@ -32,14 +32,14 @@ export function Footer() {
 							target="_blank"
 							rel="noopener noreferrer"
 							aria-label="Instagram"
-							className="text-gray-400 hover:text-white transition-colors duration-300"
+							className="footer-social"
 						>
 							<Instagram size={20} />
 						</a>
 						<a
 							href={`mailto:${profile.email}`}
 							aria-label="Email"
-							className="text-gray-400 hover:text-white transition-colors duration-300"
+							className="footer-social"
 						>
 							<Mail size={20} />
 						</a>

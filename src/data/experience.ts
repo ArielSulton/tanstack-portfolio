@@ -2,13 +2,60 @@ import type { Experience } from "../types";
 
 export const experiences: Experience[] = [
 	{
+		id: "exp-sevima",
+		company: "PT Sentra Vidya Utama (SEVIMA)",
+		role: "AI Software Engineer Intern",
+		location: "Surabaya, Indonesia",
+		startDate: "August 2026",
+		endDate: "January 2027",
+		current: true,
+		description:
+			"Contributing to the development of an agentic AI system for one of SEVIMA's modules, alongside product support responsibilities.",
+		achievements: [
+			"Help design the agentic AI system architecture",
+			"Implement assigned development tasks for the system",
+			"Benchmark AI models to inform development decisions",
+			"Provide product support alongside engineering work",
+		],
+		technologies: [
+			"Agentic AI",
+			"System Architecture",
+			"Model Benchmarking",
+			"Product Support",
+		],
+		logo: "/images/experience/sevima.png",
+	},
+	{
+		id: "exp-len",
+		company: "PT Len Industri (Persero)",
+		role: "Business Intelligence Intern",
+		location: "Bandung, Indonesia",
+		startDate: "January 2026",
+		endDate: "May 2026",
+		current: false,
+		description:
+			"Supported business intelligence through data research, processing, and visualization for business processes.",
+		achievements: [
+			"Researched data for use in business processes",
+			"Processed data collected through research",
+			"Created visualizations from the processed data",
+		],
+		technologies: [
+			"Business Intelligence",
+			"Data Research",
+			"Data Processing",
+			"Data Visualization",
+		],
+		logo: "/images/experience/len.jpeg",
+	},
+	{
 		id: "exp-1",
 		company: "Google Indonesia",
 		role: "Google Student Ambassador",
 		location: "Indonesia",
 		startDate: "September 2025",
-		endDate: undefined,
-		current: true,
+		endDate: "February 2026",
+		current: false,
 		description:
 			"Google Student Ambassador working to improve AI literacy among university students and promote Google's AI technologies.",
 		achievements: [
@@ -25,14 +72,14 @@ export const experiences: Experience[] = [
 		role: "Environmental AI Researcher",
 		location: "Surabaya, Indonesia",
 		startDate: "August 2025",
-		endDate: undefined,
-		current: true,
+		endDate: "January 2026",
+		current: false,
 		description:
-			"Conducting research on AI applications for environmental monitoring, specifically mangrove health assessment using multispectral imagery and water quality data.",
+			"Conducted research on AI applications for environmental monitoring, specifically mangrove health assessment using multispectral imagery and water quality data.",
 		achievements: [
-			"Conduct monthly collection of water-quality measurements and multispectral drone imagery",
-			"Research and build an AI pipeline for mangrove health assessment from the collected data",
-			"Apply computer vision, time-series forecasting, and LLM-based summarization (RAG)",
+			"Conducted monthly collection of water-quality measurements and multispectral drone imagery",
+			"Researched and built an AI pipeline for mangrove health assessment from the collected data",
+			"Applied computer vision, time-series forecasting, and LLM-based summarization (RAG)",
 		],
 		technologies: [
 			"Computer Vision",
@@ -49,9 +96,9 @@ export const experiences: Experience[] = [
 		company: "Asah led by Dicoding",
 		role: "Machine Learning Cohort",
 		location: "Indonesia",
-		startDate: "January 2025",
-		endDate: undefined,
-		current: true,
+		startDate: "August 2025",
+		endDate: "January 2026",
+		current: false,
 		description:
 			"Independent study program focused on machine learning and deep learning with comprehensive soft skills development.",
 		achievements: [
@@ -73,8 +120,8 @@ export const experiences: Experience[] = [
 		role: "Mentor and Social Media Specialist",
 		location: "Surabaya, Indonesia",
 		startDate: "January 2025",
-		endDate: undefined,
-		current: true,
+		endDate: "December 2025",
+		current: false,
 		description:
 			"Community leadership role focused on expanding data science community engagement and mentoring students.",
 		achievements: [
@@ -91,21 +138,35 @@ export const experiences: Experience[] = [
 		logo: "/images/experience/avif/edust.avif",
 	},
 	{
-		id: "exp-5",
+		id: "exp-penship-head",
 		company: "Penship EEPIS Roboboat Team",
-		role: "Head of Programming Division and Autonomous Systems Engineer",
+		role: "Head of Programming Division",
 		location: "Surabaya, Indonesia",
-		startDate: "January 2024",
-		endDate: undefined,
-		current: true,
+		startDate: "January 2025",
+		endDate: "December 2025",
+		current: false,
 		description:
-			"Leading software development for autonomous boat navigation systems with advanced sensor fusion and computer vision.",
+			"Led the programming division for autonomous boat software development.",
 		achievements: [
 			"Led the team's software roadmap, code-style standardization, and technical documentation",
+		],
+		technologies: ["ROS2", "Autonomous Navigation", "Technical Leadership"],
+		logo: "/images/experience/avif/penship.avif",
+	},
+	{
+		id: "exp-penship-autonomous",
+		company: "Penship EEPIS Roboboat Team",
+		role: "Autonomous Systems Engineer",
+		location: "Surabaya, Indonesia",
+		startDate: "July 2024",
+		endDate: "December 2025",
+		current: false,
+		description:
+			"Developed autonomous boat navigation systems using sensor fusion and computer vision.",
+		achievements: [
 			"Built a ROS2 stack for autonomous boat navigation with two control-method approaches",
 			"Implemented obstacle avoidance via sensor fusion across camera (computer vision), GPS, and LiDAR",
-			"Developed YOLOv11-based object detection and optimized inference & data pipelines",
-			"Evaluated model performance and mitigated false positives (color similarity, thresholding, augmentation)",
+			"Developed YOLOv11-based object detection and optimized inference and data pipelines",
 		],
 		technologies: [
 			"ROS2",
@@ -116,6 +177,21 @@ export const experiences: Experience[] = [
 			"Sensor Fusion",
 			"Autonomous Navigation",
 		],
+		logo: "/images/experience/avif/penship.avif",
+	},
+	{
+		id: "exp-penship-vision",
+		company: "Penship EEPIS Roboboat Team",
+		role: "Computer Vision Engineer",
+		location: "Surabaya, Indonesia",
+		startDate: "January 2024",
+		endDate: "June 2024",
+		current: false,
+		description: "Worked on computer vision for autonomous boat perception.",
+		achievements: [
+			"Evaluated model performance and mitigated false positives through color analysis, thresholding, and data augmentation",
+		],
+		technologies: ["Computer Vision", "Object Detection", "Data Augmentation"],
 		logo: "/images/experience/avif/penship.avif",
 	},
 ];

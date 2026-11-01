@@ -46,13 +46,21 @@ export interface Project {
 	subtitle: string;
 	description: string;
 	longDescription?: string;
+	role?: string;
+	contribution?: string;
 	category: "AI/ML" | "Robotics" | "Website";
 	technologies: string[];
 	githubUrl?: string;
+	sourceNote?: string;
 	liveUrl?: string;
-	imageUrl: string;
-	achievement?: string;
-	startDate: string;
+	imageUrl?: string;
+	imageAlt?: string;
+	imageFit?: "cover" | "contain";
+	imagePosition?: string;
+	imageScale?: number;
+	imageScaleOrigin?: string;
+	achievements?: string[];
+	startDate?: string;
 	endDate?: string;
 }
 
@@ -83,6 +91,9 @@ export interface Achievement {
 	rank?: string;
 	description: string;
 	imageUrl?: string;
+	imageAlt?: string;
+	imageFit?: "cover" | "contain";
+	imagePosition?: string;
 }
 
 export interface Certification {

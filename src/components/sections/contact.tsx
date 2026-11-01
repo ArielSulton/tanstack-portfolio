@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Mail, MessageSquare, Send, User } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import { Button } from "../ui/button";
@@ -14,7 +13,7 @@ export function Contact() {
 
 	const [buttonState, setButtonState] = useState({
 		text: "Send Message",
-		color: "bg-linear-to-r from-primary via-purple-500 to-pink-500",
+		color: "contact-submit",
 		disabled: false,
 	});
 
@@ -22,7 +21,7 @@ export function Contact() {
 		event.preventDefault();
 		setButtonState({
 			text: "Sending...",
-			color: "bg-blue-500",
+			color: "contact-sending",
 			disabled: true,
 		});
 
@@ -40,13 +39,13 @@ export function Contact() {
 			if (data.success) {
 				setButtonState({
 					text: "Success!",
-					color: "bg-green-500",
+					color: "contact-success",
 					disabled: true,
 				});
 				setTimeout(() => {
 					setButtonState({
 						text: "Send Message",
-						color: "bg-linear-to-r from-primary via-purple-500 to-pink-500",
+						color: "contact-submit",
 						disabled: false,
 					});
 				}, 2000);
@@ -59,13 +58,13 @@ export function Contact() {
 			console.error("Error:", error);
 			setButtonState({
 				text: "Failed",
-				color: "bg-red-500",
+				color: "contact-error",
 				disabled: true,
 			});
 			setTimeout(() => {
 				setButtonState({
 					text: "Send Message",
-					color: "bg-linear-to-r from-primary via-purple-500 to-pink-500",
+					color: "contact-submit",
 					disabled: false,
 				});
 			}, 2000);
@@ -84,38 +83,23 @@ export function Contact() {
 
 	return (
 		// biome-ignore lint/correctness/useUniqueElementIds: Static ID needed for navigation anchor
-		<section id="contact" className="py-20">
-			<div className="container mx-auto px-4">
+		<section id="contact" className="portfolio-section contact-section">
+			<div className="section-container contact-sheet">
 				{/* Section Header */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ duration: 0.5 }}
-					className="text-center mb-12"
-				>
-					<h2 className="text-4xl md:text-5xl font-bold mb-4">
-						Get in <span className="text-gradient">Touch</span>
+				<div className="section-heading contact-heading">
+					<h2 className="contact-title">
+						Get in <span>Touch</span>
 					</h2>
-					<p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+					<p className="contact-lead">
 						Let's connect and feel free to reach out for collaborations or just
 						a friendly chat
 					</p>
-				</motion.div>
+				</div>
 
 				{/* Contact Form */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					whileInView={{ opacity: 1, y: 0 }}
-					viewport={{ once: true }}
-					transition={{ delay: 0.2, duration: 0.5 }}
-					className="max-w-2xl mx-auto"
-				>
-					<div className="relative p-1 rounded-2xl bg-linear-to-br from-primary/30 to-purple-500/30">
-						<form
-							onSubmit={handleSubmit}
-							className="space-y-6 bg-background rounded-2xl p-8"
-						>
+				<div className="contact-form-wrap">
+					<div className="contact-form-group">
+						<form onSubmit={handleSubmit} className="contact-form">
 							{/* Name Field */}
 							<div className="relative">
 								<div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -126,8 +110,10 @@ export function Contact() {
 									name="name"
 									value={formData.name}
 									onChange={handleChange}
+									aria-label="Your Name"
+									autoComplete="name"
 									placeholder="Your Name"
-									className="w-full pl-11 pr-4 py-3.5 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+									className="contact-field"
 									required
 								/>
 							</div>
@@ -142,8 +128,10 @@ export function Contact() {
 									name="email"
 									value={formData.email}
 									onChange={handleChange}
+									aria-label="Your Email"
+									autoComplete="email"
 									placeholder="Your Email"
-									className="w-full pl-11 pr-4 py-3.5 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
+									className="contact-field"
 									required
 								/>
 							</div>
@@ -157,20 +145,18 @@ export function Contact() {
 									name="message"
 									value={formData.message}
 									onChange={handleChange}
+									aria-label="Your Message"
 									placeholder="Your Message"
 									rows={5}
-									className="w-full pl-11 pr-4 py-3.5 rounded-lg border border-border bg-background text-foreground placeholder-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 resize-none"
+									className="contact-field"
 									required
 								/>
 							</div>
 
 							{/* Submit Button */}
-							<motion.div
-								className="relative"
-								whileHover={{ scale: 1.02 }}
-								whileTap={{ scale: 0.98 }}
-							>
+							<div className="relative">
 								<Button
+									aria-live="polite"
 									type="submit"
 									size="lg"
 									disabled={buttonState.disabled}
@@ -179,10 +165,10 @@ export function Contact() {
 									<Send className="mr-2 h-4 w-4" />
 									{buttonState.text}
 								</Button>
-							</motion.div>
+							</div>
 						</form>
 					</div>
-				</motion.div>
+				</div>
 			</div>
 		</section>
 	);

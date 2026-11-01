@@ -13,6 +13,9 @@ import { Button } from "../components/ui/button";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import appCss from "../styles.css?url";
 
+const designContract =
+	"THESIS: A personal portfolio as an iOS collection: generous grouped surfaces frame the real work, keeping every existing section and fact.\nOWN-WORLD: Masalabs-pinned grouped gray, inset white lists, near-black island navigation, Schibsted Grotesk, purple details, dark contact sheet, theme-aware wallpaper and frosted glass containers and open alternating experience timeline.\nSTORY: Meet Ariel, read his background and skills, follow his experience, explore project categories and details, see awards, then contact him or download his CV.\nFIRST VIEWPORT: An upright circular head-and-shoulders portrait above a centered translucent name panel; all three existing roles visible, email and CV pills underneath, social links, a straight rectangular wallpaper edge. Flowing purple WebGL wallpaper, measured scroll-responsive Dynamic Island, and reflective glass; reduced motion uses the static wallpaper.\nFORM: Brief-pinned Masalabs iOS world overrides the seed's foreign challengers. Seed fc2a35a5. Code-first explicitly chosen by user. Work remains portfolio-specific through its existing portrait, screenshots, logos, and content.\nFINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance";
+
 interface MyRouterContext {
 	queryClient: QueryClient;
 }
@@ -22,8 +25,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		const siteTitle = "Mochammad Ariel Sulton";
 		const siteDescription =
 			"Personal portfolio of Mochammad Ariel Sulton - AI Engineer, Data Scientist, and Full-Stack Developer";
-		const siteUrl = "https://arielsulton.netlify.app"; // Update with your actual domain
-		const ogImage = "/images/avatar/avif/s-logos.avif";
+		const siteUrl = "https://arielsulton.netlify.app";
+		const ogImage = "/images/branding/hero-light-social.png";
 
 		return {
 			meta: [
@@ -43,7 +46,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				},
 				{
 					name: "theme-color",
-					content: "#3B82F6",
+					content: "#f2f2f7",
 				},
 				// Open Graph / Facebook
 				{
@@ -68,12 +71,16 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				},
 				{
 					property: "og:image:alt",
-					content: "Ariel Sulton Portfolio Logo",
+					content:
+						"Purple and blue flowing wallpaper from Ariel Sulton’s portfolio",
 				},
 				{
 					property: "og:locale",
 					content: "en_US",
 				},
+				{ property: "og:image:width", content: "1200" },
+				{ property: "og:image:height", content: "630" },
+				{ property: "og:image:type", content: "image/png" },
 				// Twitter Card
 				{
 					name: "twitter:card",
@@ -97,7 +104,8 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				},
 				{
 					name: "twitter:image:alt",
-					content: "Ariel Sulton Portfolio Logo",
+					content:
+						"Purple and blue flowing wallpaper from Ariel Sulton’s portfolio",
 				},
 				// Additional SEO
 				{
@@ -121,6 +129,12 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 					href: "/favicon.ico",
 				},
 				{
+					rel: "apple-touch-icon",
+					sizes: "180x180",
+					href: "/apple-touch-icon.png",
+				},
+				{ rel: "manifest", href: "/manifest.json" },
+				{
 					rel: "canonical",
 					href: siteUrl,
 				},
@@ -136,11 +150,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 	const isDev = import.meta.env.DEV;
 
 	return (
-		<html lang="en" className="dark overflow-x-hidden">
+		<html lang="en" suppressHydrationWarning>
 			<head>
 				<HeadContent />
 			</head>
-			<body className="overflow-x-hidden">
+			<body>
+				<script
+					// biome-ignore lint/security/noDangerouslySetInnerHtml: Static authored theme bootstrap, no user input.
+					dangerouslySetInnerHTML={{
+						__html: `document.body.prepend(document.createComment(${JSON.stringify(designContract)}));try{let t=localStorage.getItem("portfolio-theme");document.documentElement.classList.toggle("dark",t?t==="dark":matchMedia("(prefers-color-scheme: dark)").matches)}catch{}`,
+					}}
+				/>
+				<a className="skip-link" href="#main-content">
+					Skip to content
+				</a>
 				<Header />
 				{children}
 				{isDev && (
@@ -165,7 +188,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
 function NotFound() {
 	return (
-		<div className="min-h-screen flex items-center justify-center bg-background">
+		// biome-ignore lint/correctness/useUniqueElementIds: One main landmark on the not-found route, targeted by the skip link.
+		<main
+			id="main-content"
+			tabIndex={-1}
+			className="min-h-screen flex items-center justify-center bg-background"
+		>
 			<div className="container mx-auto px-4 text-center">
 				<div className="max-w-2xl mx-auto space-y-8">
 					{/* 404 Number */}
@@ -204,6 +232,6 @@ function NotFound() {
 					</div>
 				</div>
 			</div>
-		</div>
+		</main>
 	);
 }

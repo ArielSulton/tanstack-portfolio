@@ -32,7 +32,8 @@ export const Route = createFileRoute("/")({
 function Portfolio() {
 	return (
 		<>
-			<main className="min-h-screen">
+			{/* biome-ignore lint/correctness/useUniqueElementIds: One main landmark, targeted by the skip link. */}
+			<main id="main-content" tabIndex={-1} className="min-h-screen">
 				<Hero />
 				<About />
 				<Skills />

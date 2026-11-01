@@ -9,10 +9,10 @@ export const education: Education[] = [
 		location: "Surabaya, Indonesia",
 		startDate: "July 2023",
 		endDate: undefined,
-		gpa: "3.77 / 4.00",
+		gpa: "3.80 / 4.00",
 		achievements: [
 			"Fully funded by the Indonesia Government's KIP-K Scholarship (Kartu Indonesia Pintar Kuliah)",
-			"Current GPA: 3.77 / 4.00",
+			"Current GPA: 3.80 / 4.00",
 		],
 	},
 	{
