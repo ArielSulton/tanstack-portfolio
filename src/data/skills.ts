@@ -1,12 +1,11 @@
 import type { IconType } from "react-icons";
-import { FaLinux } from "react-icons/fa";
+import { FaCss3Alt, FaLinux } from "react-icons/fa";
 import { GrVmware } from "react-icons/gr";
 import { LuBrainCircuit } from "react-icons/lu";
 import { MdDataUsage } from "react-icons/md";
 import {
 	SiApacheairflow,
 	SiCplusplus,
-	SiCss3,
 	SiDocker,
 	SiFastapi,
 	SiFlask,
@@ -128,7 +127,7 @@ export const skills: SkillCategory[] = [
 			{ name: "TypeScript", level: 4, icon: SiTypescript, color: "#3178C6" },
 			{ name: "JavaScript", level: 5, icon: SiJavascript, color: "#F7DF1E" },
 			{ name: "HTML", level: 5, icon: SiHtml5, color: "#E34F26" },
-			{ name: "CSS", level: 5, icon: SiCss3, color: "#1572B6" },
+			{ name: "CSS", level: 5, icon: FaCss3Alt, color: "#1572B6" },
 			{ name: "Tailwind", level: 5, icon: SiTailwindcss, color: "#06B6D4" },
 		],
 	},
