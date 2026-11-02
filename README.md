@@ -1,5 +1,7 @@
 # Ariel Sulton Portfolio
 
+[![CI](https://github.com/ArielSulton/tanstack-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/ArielSulton/tanstack-portfolio/actions/workflows/ci.yml)
+
 Personal portfolio built with TanStack Start, React, TypeScript, and Tailwind CSS. The iOS-inspired interface supports light and dark themes, an animated WebGL hero, Dynamic Island navigation, project filters and disclosures, a skills browser, an experience timeline, achievements, CV download, and a Web3Forms contact form.
 
 ## Development
@@ -14,7 +16,7 @@ Use Node.js 22.12 or newer and Bun 1.4.4 or newer. Netlify pins the tested Node.
 ## Validation and build
 
 ```bash
-bunx tsc --noEmit
+bun run typecheck
 bunx biome check src/components src/data src/lib src/routes
 bun run build
 ```
@@ -42,3 +44,15 @@ Security updates use the committed Bun lockfile. `glob` and `minimatch` have exp
 
 
 Netlify uses the Bun and Node versions pinned in `netlify.toml`. Its build command first runs `bun install --frozen-lockfile` to reconcile restored dependency caches before loading Vite. Bun 1.2.18 can report a successful install while leaving the local transitive `deepmerge` override unresolved; Bun 1.4.4 correctly installs it, including over an existing older cache. Keep the Netlify Bun pin and `packageManager` declaration aligned when upgrading the installer.
+
+
+## Continuous integration
+
+The `CI` GitHub Actions workflow runs on pushes, pull requests, and manual dispatch. It performs a fresh frozen-lockfile install, runs the regression suite, checks TypeScript, builds the production client/SSR application, and audits all dependencies. A failed check fails the job.
+
+Node and Bun versions are read from `netlify.toml`; the workflow also checks that `packageManager` agrees with the Bun pin. It uses read-only repository permissions, SHA-pinned actions, and no restored `node_modules` cache. Repeated runs for the same ref cancel the older run. No additional repository secrets are needed.
+
+## Planned updates
+
+- **v2.1:** Replace the CV with the updated version.
+- **v2.2:** Add project case studies.
