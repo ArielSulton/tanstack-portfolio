@@ -359,6 +359,6 @@ The profile portrait stays upright and still. Ordinary action transitions last a
 
 ### Publication Assets and Access
 
-The social preview is a 1200 x 630 still of the actual light-mode hero wallpaper with all content overlays hidden for capture. It contains no text. The favicon and home-screen icons use a centered square crop of the same still. The manifest identifies Ariel Sulton and uses the light grouped-surface background. Canonical and social URLs retain the existing public domain.
+The social preview is a 1200 x 630 still of the actual light-mode hero wallpaper with all content overlays hidden for capture. It contains no text. The favicon uses a circular crop of the same wallpaper with transparent corners, provided as SVG and a multi-size ICO fallback. Home-screen icons use a centered square crop of the same still. The manifest identifies Ariel Sulton and uses the light grouped-surface background. Canonical and social URLs retain the existing public domain.
 
 The profile uses a 640 x 640 WebP derived from the original transparent PNG, preserving alpha and the existing portrait crop. Keyboard visitors can reveal a skip-to-content pill before the island; it focuses the main landmark on both the homepage and not-found page. Reduced-motion timeline presentation is handled in CSS so server and initial client markup agree. Starter demo pages and APIs are absent.
