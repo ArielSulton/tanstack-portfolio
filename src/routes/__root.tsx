@@ -25,7 +25,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		const siteTitle = "Mochammad Ariel Sulton";
 		const siteDescription =
 			"Personal portfolio of Mochammad Ariel Sulton - AI Engineer, Data Scientist, and Full-Stack Developer";
-		const siteUrl = "https://arielsulton.netlify.app";
+		const siteUrl = "https://arielsulton.web.id";
 		const ogImage = "/images/branding/hero-light-social.png";
 
 		return {
@@ -55,7 +55,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				},
 				{
 					property: "og:url",
-					content: siteUrl,
+					content: `${siteUrl}/`,
 				},
 				{
 					property: "og:title",
@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				},
 				{
 					name: "twitter:url",
-					content: siteUrl,
+					content: `${siteUrl}/`,
 				},
 				{
 					name: "twitter:title",
@@ -142,7 +142,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 				{ rel: "manifest", href: "/manifest.json" },
 				{
 					rel: "canonical",
-					href: siteUrl,
+					href: `${siteUrl}/`,
 				},
 			],
 		};

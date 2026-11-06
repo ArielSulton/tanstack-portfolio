@@ -27,7 +27,7 @@ The generated route tree is maintained by the TanStack Vite plugin. Do not edit 
 
 The favicon, home-screen icons, and 1200 x 630 social preview use a still of the hero's light-mode wallpaper without text. Asset sources are recorded in `.impeccable/asset-provenance.json`.
 
-Canonical and social URLs use `https://arielsulton.netlify.app` in `src/routes/__root.tsx`. Update that value if the public domain changes. The contact form is configured in `src/components/sections/contact.tsx`. The CV remains at `public/cv/CV_Mochammad Ariel Sulton.pdf` until its replacement is supplied.
+Canonical and social URLs use `https://arielsulton.web.id` in `src/routes/__root.tsx`. Update that value if the public domain changes. The contact form is configured in `src/components/sections/contact.tsx`. The CV remains at `public/cv/CV_Mochammad Ariel Sulton.pdf` until its replacement is supplied.
 
 Respect `prefers-reduced-motion` and preserve the static CSS wallpaper fallback. Website copy uses ordinary hyphens and contains no em dashes.
 
@@ -56,3 +56,10 @@ Node and Bun versions are read from `netlify.toml`; the workflow also checks tha
 
 - **v2.1:** Replace the CV with the updated version.
 - **v2.2:** Add project case studies.
+
+
+## Search indexing
+
+The canonical homepage is `https://arielsulton.web.id/`. `public/sitemap.xml` lists this page and `public/robots.txt` advertises the sitemap. The Netlify hostname permanently redirects to the custom domain while preserving paths. Section fragments are parts of the homepage and are not separate sitemap pages.
+
+Verify `https://arielsulton.web.id/` as a URL-prefix property in Google Search Console, submit `sitemap.xml`, and inspect the homepage URL to request indexing. Ownership verification requires the site owner's Google-provided HTML tag/file or DNS record. A successful deploy and valid sitemap make the page discoverable but do not guarantee inclusion or ranking in Google.

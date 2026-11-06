@@ -6,3 +6,10 @@
   BUN_VERSION = "1.4.4"
   BUN_FLAGS = "--frozen-lockfile"
   NODE_VERSION = "22.23.4"
+
+
+[[redirects]]
+  from = "https://arielsulton.netlify.app/*"
+  to = "https://arielsulton.web.id/:splat"
+  status = 301
+  force = true
