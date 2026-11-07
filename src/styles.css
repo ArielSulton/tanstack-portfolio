@@ -429,6 +429,20 @@ body { background-image: radial-gradient(ellipse at 5% 38%, rgb(173 145 235 / 16
 .simak-soon strong { font-weight: 650; }
 .simak-soon p + p { margin-top: 4px; }
 .simak-soon a, .simak-credits a { color: var(--purple-ink); font-weight: 600; text-decoration: underline; }
+.simak-downloads { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.simak-download { padding: 30px 28px 32px; border-radius: 30px; display: flex; flex-direction: column; gap: 22px; }
+.simak-download header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.simak-download h3 { font-size: 24px; font-weight: 650; letter-spacing: -.025em; line-height: 1.2; }
+.simak-badge { padding: 4px 11px; border-radius: 99px; background: var(--fill); border: 1px solid var(--border); font-size: 12px; font-weight: 650; color: var(--purple-ink); }
+.simak-badge[data-status="experimental"] { color: var(--muted-foreground); }
+.simak-download-files { display: grid; gap: 10px; }
+.simak-download-files .action-primary { justify-content: flex-start; text-align: left; }
+.simak-download-files .action-primary span { display: grid; line-height: 1.25; }
+.simak-download-files .action-primary small { font-size: 12px; font-weight: 500; opacity: .8; }
+.simak-download-steps { list-style: decimal; margin: 0; padding: 0 0 0 20px; display: grid; gap: 8px; font-size: 14px; line-height: 1.6; color: var(--muted-foreground); }
+.simak-download-steps li::marker { color: var(--purple-ink); font-weight: 650; }
+.simak-download-meta { margin-top: 22px; font-size: 14px; line-height: 1.6; color: var(--muted-foreground); text-align: center; }
+.simak-download-meta a { color: var(--purple-ink); font-weight: 600; text-decoration: underline; }
 .simak-preview { max-width: 1040px; margin-top: 40px; }
 .simak-shot { margin: 0; }
 .simak-shot img { display: block; width: 100%; height: auto; border-radius: 28px; box-shadow: 0 24px 48px -28px rgb(38 22 75 / 55%), 0 0 0 1px rgb(255 255 255 / 40%); aspect-ratio: 1040 / 640; background: var(--fill); }
@@ -487,6 +501,7 @@ kbd { display: inline-grid; vertical-align: middle; margin-inline: 2px; place-it
 .simak-back .action-secondary { background: var(--surface-glass); border-color: var(--surface-line); }
 @media (max-width: 999px) {
   .simak-steps { grid-template-columns: 1fr; gap: 14px; }
+  .simak-downloads { grid-template-columns: 1fr; gap: 14px; }
   .simak-sync { grid-template-columns: 1fr; }
   .simak-oss-columns { grid-template-columns: 1fr; gap: 28px; }
 }

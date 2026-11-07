@@ -93,10 +93,6 @@ function Section({
 }
 
 function Hero({ data }: { data: SimakData }) {
-	const downloads = data.downloads
-		? data.platforms.filter((platform) => data.downloads?.[platform.name])
-		: [];
-
 	return (
 		<>
 			<section className="hero simak-hero" aria-label="Pengenalan Simak">
@@ -139,17 +135,11 @@ function Hero({ data }: { data: SimakData }) {
 						</p>
 					</div>
 					<div className="hero-buttons simak-actions">
-						{downloads.length > 0 ? (
-							downloads.map((platform) => (
-								<a
-									key={platform.name}
-									className="action-primary"
-									href={data.downloads?.[platform.name] ?? undefined}
-								>
-									<Download size={18} />
-									Unduh untuk {platform.name}
-								</a>
-							))
+						{data.downloads ? (
+							<a className="action-primary" href="#unduh">
+								<Download size={18} />
+								Unduh
+							</a>
 						) : (
 							<button type="button" className="action-primary" disabled>
 								<Download size={18} />
@@ -172,7 +162,7 @@ function Hero({ data }: { data: SimakData }) {
 							</a>
 						)}
 					</div>
-					{downloads.length === 0 && (
+					{!data.downloads && (
 						<div className="simak-soon">
 							<p>
 								<strong>{data.comingSoonLabel}</strong>
@@ -205,6 +195,75 @@ function Hero({ data }: { data: SimakData }) {
 				</figure>
 			</div>
 		</>
+	);
+}
+
+function Downloads({ data }: { data: SimakData }) {
+	const { downloads } = data;
+	if (!downloads) return null;
+
+	return (
+		<Section
+			anchor="unduh"
+			title="Unduh"
+			lead={`Simak ${downloads.version}, pra-rilis. Pilih sistem operasi Anda.`}
+		>
+			<div className="simak-downloads">
+				{downloads.platforms.map((platform) => (
+					<article className="simak-sheet simak-download" key={platform.name}>
+						<header>
+							<h3>{platform.name}</h3>
+							<span className="simak-badge" data-status={platform.status}>
+								{platform.status === "verified"
+									? "Terverifikasi"
+									: "Eksperimental"}
+							</span>
+						</header>
+						<div className="simak-download-files">
+							{platform.files.map((file) => (
+								<a
+									key={file.kind}
+									className="action-primary"
+									href={file.href}
+									rel="noopener noreferrer"
+								>
+									<Download size={18} />
+									<span>
+										{file.kind}
+										<small>{file.note}</small>
+									</span>
+								</a>
+							))}
+						</div>
+						<ol className="simak-download-steps">
+							{platform.steps.map((step) => (
+								<li key={step}>{step}</li>
+							))}
+						</ol>
+					</article>
+				))}
+			</div>
+			<p className="simak-download-meta">
+				Butuh aplikasi Spotify desktop di komputer yang sama. Periksa unduhan
+				dengan{" "}
+				<a
+					href={downloads.checksumsUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					SHA256SUMS
+				</a>
+				, atau lihat{" "}
+				<a
+					href={downloads.releaseUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					halaman rilis
+				</a>
+				.
+			</p>
+		</Section>
 	);
 }
 
@@ -360,9 +419,9 @@ function Limits({ data }: { data: SimakData }) {
 					<div>
 						<h3>Windows dan macOS belum terverifikasi</h3>
 						<p>
-							Build untuk keduanya ada di jalur rilis, tetapi belum diuji di
-							mesin sungguhan. Platform yang sudah terverifikasi sejauh ini:{" "}
-							{data.lastVerifiedPlatforms.join(", ")}.
+							Installer keduanya ada di rilis sebagai eksperimental, tetapi
+							belum diuji di mesin sungguhan. Platform yang sudah terverifikasi
+							sejauh ini: {data.lastVerifiedPlatforms.join(", ")}.
 						</p>
 						<ul className="technology-list" aria-label="Status platform">
 							{data.platforms.map((platform) => (
@@ -512,7 +571,7 @@ function Faq({ data }: { data: SimakData }) {
 		},
 		{
 			question: "Apakah bisa dipakai di Windows dan macOS?",
-			answer: `Build untuk Windows dan macOS ada di jalur rilis, tetapi belum diverifikasi di mesin sungguhan. Platform yang sudah terverifikasi sejauh ini: ${data.lastVerifiedPlatforms.join(", ")}.`,
+			answer: `Bisa dicoba. Installer Windows dan macOS ada di bagian Unduh, tetapi eksperimental: belum diverifikasi di mesin sungguhan dan belum ditandatangani, jadi sistem Anda akan menampilkan peringatan saat pertama dibuka. Platform yang sudah terverifikasi sejauh ini: ${data.lastVerifiedPlatforms.join(", ")}. Hasil uji Anda sangat membantu, kirim sebagai platform test report di GitHub.`,
 		},
 		{
 			question: "Apakah Simak gratis?",
@@ -600,6 +659,7 @@ export function SimakPage({ data = simak }: { data?: SimakData }) {
 			{/* biome-ignore lint/correctness/useUniqueElementIds: One main landmark, targeted by the skip link. */}
 			<main id="main-content" tabIndex={-1} lang="id" className="min-h-screen">
 				<Hero data={data} />
+				<Downloads data={data} />
 				<HowItWorks data={data} />
 				<Features data={data} />
 				<Limits data={data} />
