@@ -1,3 +1,4 @@
+import { Link, useRouterState } from "@tanstack/react-router";
 import { ArrowUpRight, Menu, Moon, Sun, X } from "lucide-react";
 import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 import { profile } from "../../data/profile";
@@ -10,8 +11,32 @@ const navigation = [
 	{ name: "Achievements", href: "#achievements" },
 ];
 
+// Standalone pages (for example /apps/simak) have no home-page sections, so the
+// island offers a single link back to the portfolio instead of broken anchors.
+const standaloneNavigation = [{ name: "Portofolio", href: "/" }];
+
+// After a client-side navigation the new page can commit a frame after the
+// header re-renders, so wait briefly for its landmarks instead of giving up.
+function whenPresent(
+	selector: string,
+	callback: (element: Element) => void,
+	attempts = 60,
+) {
+	let frame = 0;
+	const look = () => {
+		const element = document.querySelector(selector);
+		if (element) callback(element);
+		else if (attempts-- > 0) frame = requestAnimationFrame(look);
+	};
+	look();
+	return () => cancelAnimationFrame(frame);
+}
+
 export function Header() {
 	const menuId = useId();
+	const isHome = useRouterState({
+		select: (state) => state.location.pathname === "/",
+	});
 	const [open, setOpen] = useState(false);
 	const [dark, setDark] = useState(false);
 	const [desktop, setDesktop] = useState(false);
@@ -94,35 +119,51 @@ export function Header() {
 	}, []);
 
 	useEffect(() => {
-		const target = document.querySelector(".hero-buttons");
-		if (!target) {
+		if (!isHome) {
 			setHeroAction(false);
 			return;
 		}
-		const observer = new IntersectionObserver((entries) =>
-			setHeroAction(entries[0]?.isIntersecting ?? false),
-		);
-		observer.observe(target);
-		return () => observer.disconnect();
-	}, []);
+		let observer: IntersectionObserver | undefined;
+		const stop = whenPresent(".hero-buttons", (target) => {
+			observer = new IntersectionObserver((entries) =>
+				setHeroAction(entries[0]?.isIntersecting ?? false),
+			);
+			observer.observe(target);
+		});
+		return () => {
+			stop();
+			observer?.disconnect();
+		};
+	}, [isHome]);
 
 	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				for (const entry of entries)
-					if (entry.isIntersecting)
-						setActive(entry.target.id === "home" ? "" : `#${entry.target.id}`);
-			},
-			{ rootMargin: "-12% 0px -65% 0px" },
-		);
-		const home = document.querySelector("#home");
-		if (home) observer.observe(home);
-		for (const item of navigation) {
-			const target = document.querySelector(item.href);
-			if (target) observer.observe(target);
+		if (!isHome) {
+			setActive("");
+			return;
 		}
-		return () => observer.disconnect();
-	}, []);
+		let observer: IntersectionObserver | undefined;
+		const stop = whenPresent("#home", (home) => {
+			observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries)
+						if (entry.isIntersecting)
+							setActive(
+								entry.target.id === "home" ? "" : `#${entry.target.id}`,
+							);
+				},
+				{ rootMargin: "-12% 0px -65% 0px" },
+			);
+			observer.observe(home);
+			for (const item of navigation) {
+				const target = document.querySelector(item.href);
+				if (target) observer.observe(target);
+			}
+		});
+		return () => {
+			stop();
+			observer?.disconnect();
+		};
+	}, [isHome]);
 
 	useEffect(() => {
 		if (!open) return;
@@ -144,6 +185,12 @@ export function Header() {
 			document.removeEventListener("focusin", outside);
 		};
 	}, [open]);
+
+	// Close the mobile menu when navigating to another page.
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Only the page change should close the menu.
+	useEffect(() => {
+		setOpen(false);
+	}, [isHome]);
 
 	const toggleTheme = () => {
 		const next = !dark;
@@ -177,23 +224,42 @@ export function Header() {
 			}}
 		>
 			<div className="island-bar">
-				{/* biome-ignore lint/a11y/useValidAnchor: Native fragment navigation to the hero. */}
-				<a className="island-brand" href="#home" onClick={() => setOpen(false)}>
-					<span className="brand-dot" aria-hidden="true" />
-					Ariel Sulton
-				</a>
+				{isHome ? (
+					// biome-ignore lint/a11y/useValidAnchor: Native fragment navigation to the hero.
+					<a
+						className="island-brand"
+						href="#home"
+						onClick={() => setOpen(false)}
+					>
+						<span className="brand-dot" aria-hidden="true" />
+						Ariel Sulton
+					</a>
+				) : (
+					<Link className="island-brand" to="/" onClick={() => setOpen(false)}>
+						<span className="brand-dot" aria-hidden="true" />
+						Ariel Sulton
+					</Link>
+				)}
 				<div className="island-navigation" inert={compact}>
 					<div ref={panel} className="island-navigation-inner">
 						<nav className="desktop-nav" aria-label="Main navigation">
-							{navigation.map((item) => (
-								<a
-									key={item.name}
-									href={item.href}
-									aria-current={active === item.href ? "location" : undefined}
-								>
-									{item.name}
-								</a>
-							))}
+							{isHome
+								? navigation.map((item) => (
+										<a
+											key={item.name}
+											href={item.href}
+											aria-current={
+												active === item.href ? "location" : undefined
+											}
+										>
+											{item.name}
+										</a>
+									))
+								: standaloneNavigation.map((item) => (
+										<Link key={item.name} to={item.href}>
+											{item.name}
+										</Link>
+									))}
 						</nav>
 					</div>
 				</div>
@@ -228,17 +294,24 @@ export function Header() {
 			<div className="mobile-nav-shell" inert={!open} aria-hidden={!open}>
 				<nav id={menuId} className="mobile-nav" aria-label="Mobile navigation">
 					<div className="mobile-nav-content">
-						{navigation.map((item) => (
-							<a
-								key={item.name}
-								href={item.href}
-								aria-current={active === item.href ? "location" : undefined}
-								onClick={closeMenu}
-							>
-								{item.name}
-								<ArrowUpRight size={20} />
-							</a>
-						))}
+						{isHome
+							? navigation.map((item) => (
+									<a
+										key={item.name}
+										href={item.href}
+										aria-current={active === item.href ? "location" : undefined}
+										onClick={closeMenu}
+									>
+										{item.name}
+										<ArrowUpRight size={20} />
+									</a>
+								))
+							: standaloneNavigation.map((item) => (
+									<Link key={item.name} to={item.href} onClick={closeMenu}>
+										{item.name}
+										<ArrowUpRight size={20} />
+									</Link>
+								))}
 						<a href={`mailto:${profile.email}`} onClick={closeMenu}>
 							Contact
 							<ArrowUpRight size={20} />

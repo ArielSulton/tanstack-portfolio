@@ -8,18 +8,13 @@ import {
 	Mail,
 } from "lucide-react";
 import { profile } from "../../data/profile";
-import { HeroGradient } from "./hero-gradient";
+import { HeroBackdrop } from "./hero-backdrop";
 
 export function Hero() {
 	return (
 		// biome-ignore lint/correctness/useUniqueElementIds: Stable single-page navigation anchor, rendered once.
 		<section id="home" className="hero">
-			<div className="hero-wallpaper" aria-hidden="true">
-				<div />
-				<div />
-				<div />
-			</div>
-			<HeroGradient />
+			<HeroBackdrop />
 			<div className="hero-content">
 				<div className="hero-avatar">
 					<img

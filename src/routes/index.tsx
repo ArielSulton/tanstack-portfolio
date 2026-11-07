@@ -7,6 +7,7 @@ import { Footer } from "../components/sections/footer";
 import { Hero } from "../components/sections/hero";
 import { Projects } from "../components/sections/projects";
 import { Skills } from "../components/sections/skills";
+import { siteUrl } from "../lib/site";
 
 export const Route = createFileRoute("/")({
 	component: Portfolio,
@@ -26,6 +27,9 @@ export const Route = createFileRoute("/")({
 					"AI Engineer, Data Science, Machine Learning, Full-Stack Developer, Computer Vision, LLM, React, Python, TensorFlow",
 			},
 		],
+		// The canonical URL lives with each page so that other routes do not
+		// inherit the homepage's canonical link (links are not deduplicated).
+		links: [{ rel: "canonical", href: `${siteUrl}/` }],
 	}),
 });
 

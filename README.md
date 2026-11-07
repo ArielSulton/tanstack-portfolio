@@ -11,7 +11,7 @@ bun install --frozen-lockfile
 bun run dev
 ```
 
-Use Node.js 22.12 or newer and Bun 1.4.4 or newer. Netlify pins the tested Node.js 22.23.4 and Bun 1.4.4 versions. The development server uses port 3000. Portfolio content lives in `src/data`, sections in `src/components/sections`, and media in `public/images`. The only public page is `/`; unknown paths use the custom not-found screen. Starter demo routes and APIs have been removed.
+Use Node.js 22.12 or newer and Bun 1.4.4 or newer. Netlify pins the tested Node.js 22.23.4 and Bun 1.4.4 versions. The development server uses port 3000. Portfolio content lives in `src/data`, sections in `src/components/sections`, and media in `public/images`. The public pages are `/` and `/apps/simak`; unknown paths use the custom not-found screen. Starter demo routes and APIs have been removed.
 
 ## Validation and build
 
@@ -22,6 +22,10 @@ bun run build
 ```
 
 The generated route tree is maintained by the TanStack Vite plugin. Do not edit it manually. The Netlify TanStack Start plugin packages the server-rendered build; Vite's static preview alone does not serve the SSR application.
+
+## Halaman aplikasi
+
+`/apps/simak` adalah halaman pengenal aplikasi desktop Simak (Simak Ayat). Rutenya ada di `src/routes/apps/simak.tsx` dan tampilannya di `src/components/sections/simak-page.tsx`. Semua fakta, angka, dan tautan (status, jumlah surah, daftar surah yang tidak didukung, platform yang sudah diverifikasi, tautan repositori, tautan unduhan, license MIT beserta tautan LICENSE dan panduan kontribusi, daftar help wanted) ada di `src/data/simak.ts`; ubah berkas itu saat aplikasi dirilis. `downloads` tetap `null` sampai rilis nyata ada, dan selama itu halaman hanya menampilkan "Segera hadir". Tangkapan layar widget ada di `public/images/simak/` dan dicatat di `.impeccable/asset-provenance.json`. Teks halaman memakai tanda hubung biasa tanpa tanda pisah em.
 
 ## Branding and publication
 
@@ -60,6 +64,6 @@ Node and Bun versions are read from `netlify.toml`; the workflow also checks tha
 
 ## Search indexing
 
-The canonical homepage is `https://arielsulton.web.id/`. `public/sitemap.xml` lists this page and `public/robots.txt` advertises the sitemap. The Netlify hostname permanently redirects to the custom domain while preserving paths. Section fragments are parts of the homepage and are not separate sitemap pages.
+The canonical homepage is `https://arielsulton.web.id/`; `https://arielsulton.web.id/apps/simak` is the only other page. Each route declares its own canonical link in its `head` (the root declares none, because TanStack does not deduplicate links). `public/sitemap.xml` lists both pages and `public/robots.txt` advertises the sitemap. The Netlify hostname permanently redirects to the custom domain while preserving paths. Section fragments are parts of the homepage and are not separate sitemap pages.
 
 Verify `https://arielsulton.web.id/` as a URL-prefix property in Google Search Console, submit `sitemap.xml`, and inspect the homepage URL to request indexing. Ownership verification requires the site owner's Google-provided HTML tag/file or DNS record. A successful deploy and valid sitemap make the page discoverable but do not guarantee inclusion or ranking in Google.
