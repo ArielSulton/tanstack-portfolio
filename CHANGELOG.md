@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.0.1 - 2026-11-07
+## v2.1 - 2026-11-07
 
 ### Added
 
@@ -21,6 +21,6 @@
 - TypeScript, production client/SSR build, and dependency audit are part of CI.
 - Desktop/mobile, theme switching, navigation, and reduced-motion behavior were checked in the browser.
 
-Simak remains a pre-release: application downloads are not available yet. The portfolio CV replacement remains planned for v2.1; project case studies remain planned for v2.2.
+Simak remains a pre-release: application downloads are not available yet. The portfolio CV replacement and project case studies are planned for v2.2.
 
-[Compare v2.0...v2.0.1](https://github.com/ArielSulton/tanstack-portfolio/compare/v2.0...v2.0.1)
+[Compare v2.0...v2.1](https://github.com/ArielSulton/tanstack-portfolio/compare/v2.0...v2.1)

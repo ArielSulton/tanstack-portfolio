@@ -58,8 +58,7 @@ Node and Bun versions are read from `netlify.toml`; the workflow also checks tha
 
 ## Planned updates
 
-- **v2.1:** Replace the CV with the updated version.
-- **v2.2:** Add project case studies.
+- **v2.2:** Replace the CV with the updated version and add project case studies.
 
 
 ## Search indexing
