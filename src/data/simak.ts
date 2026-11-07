@@ -8,8 +8,102 @@ import { siteUrl } from "../lib/site";
 export type SimakStatus = "pre-release" | "released";
 export type SimakPlatform = "Linux" | "Windows" | "macOS";
 
-/** Release URLs per platform. Keep `downloads` as `null` until a real release exists. */
-export type SimakDownloads = Record<SimakPlatform, string | null>;
+export type SimakPlatformStatus = "verified" | "experimental";
+
+export interface SimakDownloadFile {
+	/** File type shown on the button, for example ".deb". */
+	kind: string;
+	note: string;
+	href: string;
+}
+
+export interface SimakPlatformDownload {
+	name: SimakPlatform;
+	status: SimakPlatformStatus;
+	files: SimakDownloadFile[];
+	steps: string[];
+}
+
+/** Real release assets. Keep `downloads` as `null` when there is no release, which shows "Segera hadir". */
+export interface SimakDownloads {
+	version: string;
+	releaseUrl: string;
+	checksumsUrl: string;
+	platforms: SimakPlatformDownload[];
+}
+
+const repo = "https://github.com/ArielSulton/quran-widget";
+const releaseVersion = "0.1.0";
+const assetBase = `${repo}/releases/download/v${releaseVersion}`;
+
+const downloads: SimakDownloads = {
+	version: releaseVersion,
+	releaseUrl: `${repo}/releases/tag/v${releaseVersion}`,
+	checksumsUrl: `${assetBase}/SHA256SUMS`,
+	platforms: [
+		{
+			name: "Linux",
+			status: "verified",
+			files: [
+				{
+					kind: ".deb",
+					note: "Debian, Ubuntu",
+					href: `${assetBase}/Simak_${releaseVersion}_amd64.deb`,
+				},
+				{
+					kind: ".rpm",
+					note: "Fedora, openSUSE",
+					href: `${assetBase}/Simak-${releaseVersion}-1.x86_64.rpm`,
+				},
+				{
+					kind: ".AppImage",
+					note: "Distro lain",
+					href: `${assetBase}/Simak_${releaseVersion}_amd64.AppImage`,
+				},
+			],
+			steps: [
+				"Pasang .deb dengan sudo apt install ./berkas.deb, atau jalankan chmod +x pada AppImage lalu buka. Perlu libwebkit2gtk-4.1.",
+				"Putar bacaan Juz 30 di Spotify desktop.",
+			],
+		},
+		{
+			name: "macOS",
+			status: "experimental",
+			files: [
+				{
+					kind: ".dmg",
+					note: "Apple silicon dan Intel",
+					href: `${assetBase}/Simak_${releaseVersion}_universal.dmg`,
+				},
+			],
+			steps: [
+				"Seret Simak ke Applications.",
+				"Aplikasi belum ditandatangani, jadi Gatekeeper memblokirnya: klik kanan Simak lalu pilih Open, atau izinkan di System Settings > Privacy & Security.",
+				"Izinkan Simak mengontrol Spotify saat macOS bertanya.",
+			],
+		},
+		{
+			name: "Windows",
+			status: "experimental",
+			files: [
+				{
+					kind: ".exe",
+					note: "Installer",
+					href: `${assetBase}/Simak_${releaseVersion}_x64-setup.exe`,
+				},
+				{
+					kind: ".msi",
+					note: "Paket MSI",
+					href: `${assetBase}/Simak_${releaseVersion}_x64_en-US.msi`,
+				},
+			],
+			steps: [
+				"Aplikasi belum ditandatangani, jadi SmartScreen menampilkan Windows protected your PC.",
+				"Klik More info, lalu Run anyway, dan putar bacaan di Spotify desktop.",
+			],
+		},
+	],
+};
 
 const lastVerifiedPlatforms: SimakPlatform[] = ["Linux"];
 
@@ -45,13 +139,10 @@ export const simak = {
 		driftSeconds: 1,
 		keys: { earlier: "[", later: "]" },
 	},
-	// TODO: release links. Fill `downloads` per platform once a real release exists;
-	// until then the page shows "Segera hadir" and renders no download link.
-	downloads: null as SimakDownloads | null,
-	repoUrl: "https://github.com/ArielSulton/quran-widget" as string | null,
-	releasesUrl: "https://github.com/ArielSulton/quran-widget/releases" as
-		| string
-		| null,
+	// Release assets of v0.1.0. Set to null when there is no release: the page then shows "Segera hadir".
+	downloads: downloads as SimakDownloads | null,
+	repoUrl: repo as string | null,
+	releasesUrl: `${repo}/releases` as string | null,
 	comingSoonLabel: "Segera hadir",
 	nonAffiliation:
 		"Simak tidak berafiliasi dengan, disponsori, atau didukung oleh Spotify AB. Spotify adalah merek dagang Spotify AB.",

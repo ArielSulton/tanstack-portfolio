@@ -88,14 +88,23 @@ describe("Simak landing page content", () => {
 			if (index > 0) expect(level - levels[index - 1]).toBeLessThanOrEqual(1);
 	});
 
-	it("states the status, the coming-soon download area and the non-affiliation notice", async () => {
+	it("states the status, the download section and the non-affiliation notice", async () => {
 		const { container } = await renderPage();
 		const text = container.textContent ?? "";
 		expect(text).toContain("Pra-rilis");
-		expect(text).toContain("Segera hadir");
+		expect(text).not.toContain("Segera hadir");
 		expect(text).toContain(
 			"Simak tidak berafiliasi dengan, disponsori, atau didukung oleh Spotify AB. Spotify adalah merek dagang Spotify AB.",
 		);
+		const download = screen.getByRole("link", { name: /^Unduh$/ });
+		expect(download.getAttribute("href")).toBe("#unduh");
+		expect(container.querySelector("#unduh")).toBeTruthy();
+	});
+
+	it("shows the coming-soon state and a disabled button when there is no release", async () => {
+		const { container } = await renderPage({ ...simak, downloads: null });
+		expect(container.textContent).toContain("Segera hadir");
+		expect(container.querySelector("#unduh")).toBeNull();
 		const download = screen.getByRole("button", { name: /Unduh/ });
 		expect((download as HTMLButtonElement).disabled).toBe(true);
 	});
@@ -265,7 +274,7 @@ describe("Simak data invariants", () => {
 				simak.excludedSurahs.length,
 		).toBe(simak.surahCount);
 		expect([...simak.lastVerifiedPlatforms]).toEqual(["Linux"]);
-		expect(simak.downloads).toBeNull();
+		expect(simak.downloads?.version).toBe("0.1.0");
 		expect(simak.repoUrl).toBe("https://github.com/ArielSulton/quran-widget");
 		expect(simak.releasesUrl).toBe(`${simak.repoUrl}/releases`);
 	});
@@ -278,7 +287,7 @@ describe("Simak data invariants", () => {
 	});
 
 	it("renders the repository and releases links while downloads is null", async () => {
-		const { container } = await renderPage();
+		const { container } = await renderPage({ ...simak, downloads: null });
 		const hrefs = [...container.querySelectorAll("a")].map((a) =>
 			a.getAttribute("href"),
 		);
@@ -298,6 +307,7 @@ describe("Simak data invariants", () => {
 	it("renders no GitHub anchors when all repository links are null", async () => {
 		const { container } = await renderPage({
 			...simak,
+			downloads: null,
 			repoUrl: null,
 			releasesUrl: null,
 			licenseUrl: null,
@@ -315,23 +325,45 @@ describe("Simak data invariants", () => {
 		expect(screen.getByText("Segera hadir")).toBeTruthy();
 	});
 
-	it("renders download anchors only for platforms with a real URL", async () => {
-		const { container } = await renderPage({
-			...simak,
-			downloads: {
-				Linux: "https://example.test/simak.AppImage",
-				Windows: null,
-				macOS: null,
-			},
-		});
-		const links = [...container.querySelectorAll("a")].filter((a) =>
-			a.textContent?.startsWith("Unduh"),
+	it("offers a card with real release links for Linux, macOS and Windows", async () => {
+		const { container } = await renderPage();
+		const downloads = simak.downloads;
+		expect(downloads).toBeTruthy();
+		if (!downloads) return;
+		expect(downloads.platforms.map((p) => p.name)).toEqual([
+			"Linux",
+			"macOS",
+			"Windows",
+		]);
+		const section = container.querySelector("#unduh") as HTMLElement;
+		const hrefs = [...section.querySelectorAll("a")].map((a) =>
+			a.getAttribute("href"),
 		);
-		expect(links).toHaveLength(1);
-		expect(links[0].getAttribute("href")).toBe(
-			"https://example.test/simak.AppImage",
+		const base = `${simak.releasesUrl}/download/v${downloads.version}/`;
+		for (const platform of downloads.platforms) {
+			expect(platform.files.length).toBeGreaterThan(0);
+			for (const file of platform.files) {
+				expect(file.href.startsWith(base)).toBe(true);
+				expect(hrefs).toContain(file.href);
+			}
+		}
+		expect(hrefs).toContain(downloads.checksumsUrl);
+		expect(hrefs).toContain(downloads.releaseUrl);
+		expect(section.querySelector("button[disabled]")).toBeNull();
+	});
+
+	it("labels only the verified platforms as verified", async () => {
+		const { container } = await renderPage();
+		const downloads = simak.downloads;
+		if (!downloads) throw new Error("downloads missing");
+		const verified = downloads.platforms
+			.filter((p) => p.status === "verified")
+			.map((p) => p.name);
+		expect(verified).toEqual([...simak.lastVerifiedPlatforms]);
+		const badges = [...container.querySelectorAll(".simak-badge")].map(
+			(el) => el.textContent,
 		);
-		expect(container.querySelector("button[disabled]")).toBeNull();
+		expect(badges).toEqual(["Terverifikasi", "Eksperimental", "Eksperimental"]);
 	});
 });
 

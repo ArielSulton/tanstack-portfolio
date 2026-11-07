@@ -24,7 +24,8 @@ export const projects: Project[] = [
 		githubUrl: "https://github.com/ArielSulton/quran-widget",
 		liveUrl: "https://arielsulton.web.id/apps/simak",
 		imageUrl: "/images/simak/widget-dark-longest.webp",
-		imageAlt: "Simak widget showing a long ayah with its Indonesian translation",
+		imageAlt:
+			"Simak widget showing a long ayah with its Indonesian translation",
 		imageFit: "cover",
 	},
 	{
