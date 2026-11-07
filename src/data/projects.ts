@@ -2,6 +2,32 @@ import type { Project } from "../types";
 
 export const projects: Project[] = [
 	{
+		id: "proj-simak",
+		slug: "simak",
+		title: "Simak",
+		subtitle: "Ayah Widget for Quran Recitation on Spotify",
+		role: "Creator & Maintainer",
+		contribution: "Open source · MIT license",
+		description:
+			"A desktop widget that shows the Arabic ayah and its Indonesian translation as a Spotify recitation plays, and switches ayah as the reciter moves on.",
+		longDescription:
+			"Reads the local Spotify app through the operating system's media APIs (MPRIS, AppleScript, Windows media controls), so there is no Spotify login or API. Ayah timings come from forced alignment of the recitation, checked against Spotify's own tracks, with a sync control for the small drift Spotify adds. Version one covers Juz 30 by Yasser Al-Dosari. Built with Tauri 2, Rust, and TypeScript, and open to contributions through a fork and a pull request.",
+		category: "Website",
+		technologies: [
+			"Tauri 2",
+			"Rust",
+			"TypeScript",
+			"Vite",
+			"MPRIS",
+			"PyTorch (forced alignment)",
+		],
+		githubUrl: "https://github.com/ArielSulton/quran-widget",
+		liveUrl: "https://arielsulton.web.id/apps/simak",
+		imageUrl: "/images/simak/widget-dark-longest.webp",
+		imageAlt: "Simak widget showing a long ayah with its Indonesian translation",
+		imageFit: "cover",
+	},
+	{
 		id: "proj-astalink",
 		slug: "astalink-ai",
 		title: "AstaLink AI",

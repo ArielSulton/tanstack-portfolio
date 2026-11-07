@@ -11,6 +11,7 @@ import { ArrowLeft, Home } from "lucide-react";
 import { Header } from "../components/layout/header";
 import { Button } from "../components/ui/button";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import { siteUrl } from "../lib/site";
 import appCss from "../styles.css?url";
 
 const designContract =
@@ -25,7 +26,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 		const siteTitle = "Mochammad Ariel Sulton";
 		const siteDescription =
 			"Personal portfolio of Mochammad Ariel Sulton - AI Engineer, Data Scientist, and Full-Stack Developer";
-		const siteUrl = "https://arielsulton.web.id";
 		const ogImage = "/images/branding/hero-light-social.png";
 
 		return {
@@ -140,10 +140,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 					href: "/apple-touch-icon.png",
 				},
 				{ rel: "manifest", href: "/manifest.json" },
-				{
-					rel: "canonical",
-					href: `${siteUrl}/`,
-				},
 			],
 		};
 	},
